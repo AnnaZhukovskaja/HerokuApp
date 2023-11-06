@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class SortableDataTablesTest {
 
     WebDriver driver;
 
@@ -24,16 +24,15 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElements(By.xpath("//button[text()='Delete']")).get(1).click();
-
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()='Delete']")).size(), 1);
+    public void sortableDataTables() {
+        driver.get("https://the-internet.herokuapp.com/tables");
+        Assert.assertEquals(driver.findElement(By.xpath("//table[1]/tbody/tr[1]/td[1]")).getText(),"Smith");
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"table1\"]/tbody/tr[2]/td[3]")).getText(),"fbach@yahoo.com");
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"table2\"]/tbody/tr[3]/td[4]")).getText(),"$100.00");
+        Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"table2\"]/tbody/tr[4]/td[5]")).getText(),"http://www.timconway.com");
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod (alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }

@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class NotificationMessagesTest {
 
     WebDriver driver;
 
@@ -24,16 +24,15 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElements(By.xpath("//button[text()='Delete']")).get(1).click();
-
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()='Delete']")).size(), 1);
+    public void NotificationMessages() {
+        driver.get("https://the-internet.herokuapp.com/notification_message_rendered");
+        for (int i = 0; i < 2; i++) {
+            driver.findElement(By.linkText("Click here")).click();
+            Assert.assertEquals(driver.findElement(By.cssSelector("[id=flash]")).getText().replace("\n×", ""), "Action successful");
+        }
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod (alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }

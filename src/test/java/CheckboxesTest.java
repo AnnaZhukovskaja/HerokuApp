@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class CheckboxesTest {
 
     WebDriver driver;
 
@@ -24,13 +24,15 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElements(By.xpath("//button[text()='Delete']")).get(1).click();
+    public void checkboxes() {
+        driver.get("https://the-internet.herokuapp.com/checkboxes");
+        Assert.assertFalse(driver.findElement(By.cssSelector("[type=checkbox]")).isSelected());
+        driver.findElement(By.cssSelector("[type=checkbox]")).click();
+        Assert.assertTrue(driver.findElement(By.cssSelector("[type=checkbox]")).isSelected());
 
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()='Delete']")).size(), 1);
+        Assert.assertTrue(driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]")).isSelected());
+        driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]")).click();
+        Assert.assertFalse(driver.findElement(By.xpath("//*[@id=\"checkboxes\"]/input[2]")).isSelected());
     }
 
     @AfterMethod(alwaysRun = true)

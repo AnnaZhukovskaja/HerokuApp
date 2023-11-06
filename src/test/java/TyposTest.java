@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
-public class AddRemoveElementsTest {
+public class TyposTest {
 
     WebDriver driver;
 
@@ -24,16 +24,16 @@ public class AddRemoveElementsTest {
     }
 
     @Test
-    public void addRemoveElements() {
-        driver.get("https://the-internet.herokuapp.com/add_remove_elements/");
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElement(By.xpath("//button[text()='Add Element']")).click();
-        driver.findElements(By.xpath("//button[text()='Delete']")).get(1).click();
-
-        Assert.assertEquals(driver.findElements(By.xpath("//button[text()='Delete']")).size(), 1);
+    public void typos() {
+        driver.get("https://the-internet.herokuapp.com/typos");
+        for (int i = 0; i < 4; i++) {
+            driver.navigate().refresh();
+            Assert.assertEquals(driver.findElement(By.xpath("//*[@id=\"content\"]/div/p[2]")).getAttribute("innerText"),
+                    "Sometimes you'll see a typo, other times you won't.", "There are typo in the text.");
+        }
     }
 
-    @AfterMethod(alwaysRun = true)
+    @AfterMethod (alwaysRun = true)
     public void tearDown() {
         driver.quit();
     }
